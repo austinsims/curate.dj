@@ -20,44 +20,40 @@
 		<![endif]-->
 	</head>
 	<body>
+	<div class="container">
 		<div class="row">
 			<div class="col-md-12 title">
 				<h1>CurateDJ</h1>
 			</div>
 		</div>
 		<div class="row hidden-border">
-			<div class="col-md-6">
-				<h2 style="text-align: left;" >Currently Playing: Title - Artist</h2>
+			<div class="col-md-12">
+				<h2 style="text-align: left;" >Currently Playing: Title - Artist, Picked by: ertemplin</h2>
 			</div>	
-			<div class="col-md-6">
-				<span class="pull-right">
-				<h2 style="text-align: right;" >Picked by: ertemplin</h2>
-				</span>
-			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-6 text-center hidden-border" >
 				<div>
 					<h2>Vote!</h2>
 				</div>
-				<span class="glyphicon glyphicon-arrow-up" style="font-size: 150px;"></span>
+				<span class="glyphicon glyphicon-arrow-up" style="font-size: 150px; padding-right: 9px;"></span>
 				<div>
 					<span style="font-size: 100px;">5</span>	
 				</div>
-				<span class="glyphicon glyphicon-arrow-down" style="font-size: 150px;"></span>
+				<span class="glyphicon glyphicon-arrow-down" style="font-size: 150px; padding-left: 14px;"></span>
 
 			</div>
 			<div class="col-md-6 hidden-border">
-				<div>
-					<h2>Queue</h2>
-				</div>
-				<ul class="list-group">
+				<div class="panel panel-default">
+					<div class="panel-heading panel-title">Queue</div>
+				<ul class="panel-body list-group">
 					<li class="list-group-item">Song 1 - Artist 1</li>
 					<li class="list-group-item">Song 2 - Artist 2</li>
 					<li class="list-group-item">Song 3 - Artist 3</li>	
 				</ul>
+				</div>
 			</div>
-
+	</div>
 
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>	
