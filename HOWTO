@@ -2,3 +2,17 @@ To start the server, navigate to where curatedj.py is and:
 
 gunicorn -b 0.0.0.0:<YOUR_PORT> --debug --worker-class=gevent -t 99999 curatedj:curatedj
 
+
+To get all songs in database:
+
+from mpd import MPDClient
+cl = MPDClient()
+cl.connect("localhost",6600)
+all = cl.listallinfo()
+songs = list()
+for s in all:
+    if not 'directory' in s:
+        songs.append(s)
+# now songs is a list of just the songs in the database
+
+class Song
