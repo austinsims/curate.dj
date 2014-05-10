@@ -128,8 +128,12 @@ MRP.insert({
   }
 
   function enqueue(path) {
+    var u = "{{ username }}";
     var browser_div = document.getElementById('browser');
     uri = encodeURI("/add/" + path)
+    $.post(uri,{username:u},function(data) {
+      alert(data)
+    });
     $.get(uri,null);
     browser_div.innerHTML = "";
     reload_playlist();    

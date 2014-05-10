@@ -47,17 +47,20 @@ def playlist():
 
 @curatedj.route('/', methods=['GET','POST'])
 def index():
+    import pdb; pdb.set_trace()
     if request.method == 'GET':
         return render_template('login.html')
     else:
         username = request.form['username']
-        picked = 'FIXME'
+
         con = connect()
         if 'song' in con.status():
             index = int(con.status()['song'])
             song = con.playlistinfo()[index]
+            picked = red.get(song['file'])
         else:
             song = None
+            picked = None
         return render_template('index.html', song=song, picked=picked, username=username)
 
 @curatedj.route('/next')
@@ -72,12 +75,17 @@ def prev():
     cl.previous()
     return redirect(url_for('playlist'))
 
-@curatedj.route('/add/<path:filepath>')
+@curatedj.route('/add/<path:filepath>', methods=['POST'])
 def add(filepath):
+    username = request.form['username']
     cl = connect()
     cl.add(filepath)
+    # TODO: store "who added me" info with playlist--need to store
+    # playlist somewhere else beside inside python-mpd2 library??
+    # write wrapper for playlist functions??
+    red.put(filepath, username)
     cl.play()
-    return redirect(url_for('index'))
+    return request.form['username']
 
 @curatedj.route('/browse')
 @curatedj.route('/browse/<artist>')
