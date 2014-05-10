@@ -11,6 +11,7 @@
 		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
 
 		<link rel="stylesheet" href="static/css/main.css">
+		<link rel="stylesheet" href="static/css/bootstrap-slider.min.css">
 
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -27,9 +28,26 @@
 	  </div>
 
 		<div class="container">
-			<div class="row">
-				<div class="col-md-12 title">
+			<div class="row title">
+				<div class="col-md-6">
 					<h1>CurateDJ</h1>
+				</div>
+				<div class="col-md-3">
+					<h4>
+					Progress
+					<div class="progress">
+						<div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 10%; min-width: 30%;">
+							8:88-8:88
+						</div>
+					</div>
+					</h4>
+				</div>
+				<div class="col-md-3">
+					<h4>
+					Volume
+						<a><span class="glyphicon glyphicon-volume-off"></span></a>
+						<input id="volume" data-slider-id='volumeSlider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="75" data-slider-tooltip="hide"/>
+					</h4>
 				</div>
 			</div>
 			<div class="row hidden-border">
@@ -66,6 +84,7 @@
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>	
 		<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+		<script src="static/js/bootstrap-slider.min.js"></script>
 
 <div style="visibility:hidden">
 <!-- BEGINS: AUTO-GENERATED MUSES RADIO PLAYER CODE -->
@@ -147,6 +166,12 @@ MRP.insert({
             reload_playlist();
   		}
   	};
+	
+	$('#volume').slider({
+		formater: function(value) {
+			return 'Current value: ' + value;
+		}
+	});
   }
 
   $(document).ready(monitor_now_playing())

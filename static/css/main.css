@@ -10,3 +10,7 @@
 .glyphicon {
 	vertical-align: middle;
 }
+
+#volumeSlider .slider-selection {
+	background: #BABABA;
+}
