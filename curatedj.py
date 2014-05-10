@@ -26,7 +26,7 @@ def unknown_album(artist):
     cl = connect()
     result = list()
     for song in cl.find('album',''):
-        if song['artist'] == artist:
+        if 'artist' in song and song['artist'] == artist:
             result.append(song)
     return result
 
