@@ -118,7 +118,8 @@ def downvote():
     red.set('vote_tally', votes)
 
     #Skip if the song sucks.
-    if votes <= population / -2:
+#    if votes <= int(math.ceil(float(population) / float(-2))):
+    if votes <= -1:
         cl = connect()
         cl.next()
         votes = 0
