@@ -3,7 +3,7 @@
 {% block content %}
   <h2>Albums by {{ artist }}</h2>
   {% for album in albums %}
-    <a href="{{ url_for('browse', artist=artist, album=album) }}">{{ album }}</a>
+    <a href="#" onClick="load_song_list('{{artist}}','{{album}}')">{{ album }}</a>
   <br/>
   {% endfor %}
 

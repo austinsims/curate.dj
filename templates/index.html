@@ -20,6 +20,12 @@
 		<![endif]-->
 	</head>
 	<body>
+
+	  <a href="#" onClick="load_artist_list()">Browse</a>
+	  <div id="browser">
+
+	  </div>
+
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12 title">
@@ -96,6 +102,37 @@ MRP.insert({
     $.get("/playlist", function(data, status) {
   		playlist_div.innerHTML = data;
     });
+  }
+
+  function load_artist_list() {
+    var browser_div = document.getElementById('browser');
+    $.get("/browse", function(data, status) {
+      browser_div.innerHTML = data;
+    });
+  }
+
+  function load_album_list(artist) {
+    var browser_div = document.getElementById('browser');
+    uri = encodeURI("/browse/" + artist)
+    $.get(uri, function(data,status) {
+      browser_div.innerHTML = data;
+    });
+  }
+
+  function load_song_list(artist, album) {
+    var browser_div = document.getElementById('browser');
+    uri = encodeURI("/browse/" + artist + "/" + album);
+    $.get(uri, function(data,status) {
+      browser_div.innerHTML = data;
+    });
+  }
+
+  function enqueue(path) {
+    var browser_div = document.getElementById('browser');
+    uri = encodeURI("/add/" + path)
+    $.get(uri,null);
+    browser_div.innerHTML = "";
+    reload_playlist();    
   }
 
   function monitor_now_playing() {

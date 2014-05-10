@@ -3,7 +3,7 @@
 {% block content %}
 <h2>Songs in album {{ album }}</h2>
 {% for song in songs %}
-  <a href="{{ url_for('add', filepath=song.file) }}">{{ song.artist }} - {{ song.title }}</a>
+  <a href="#" onClick="enqueue('{{song.file}}')">{{ song.artist }} - {{ song.title }}</a>
 <br/>
 {% endfor %}
 {% endblock %}
