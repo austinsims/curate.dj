@@ -150,6 +150,10 @@ def add(filepath):
     message = "%s - %s, Picked by: %s" % (artist, title, username)
     return message
 
+@curatedj.route('/countvotes')
+def countvotes():
+    return red.get('vote_tally')
+
 @curatedj.route('/browse')
 @curatedj.route('/browse/<artist>')
 @curatedj.route('/browse/<artist>/<album>')

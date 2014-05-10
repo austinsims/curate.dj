@@ -206,9 +206,10 @@ var dirty_hack_flag = true;
     var vote_tally_stream = new EventSource('/vote_tally_stream');
     var vote_tally = document.getElementById('vote_tally');
     vote_tally_stream.onmessage = function(e) {
-      if ( !(e.data == "1") ) {
-        vote_tally.innerHTML =  e.data;
-      }
+      var vote_count;
+      $.get('/countvotes',function(data,status) {
+        vote_tally.innerHTML =  data;
+      });
     }
 
 	$('#volume').slider().on('slide', function() {
