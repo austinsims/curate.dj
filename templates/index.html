@@ -71,12 +71,13 @@
 					<div>
 						<h2>Vote!</h2>
 					</div>
-					<span id="upvote" class="glyphicon glyphicon-arrow-up" style="color:green; font-size: 150px; padding-right: 9px; cursor:pointer;" onClick="upvote()"></span>
-					<span id="already_upvoted" class="glyphicon glyphicon-arrow-up" style="font-size: 150px; padding-right: 9px; cursor:pointer;" onClick="upvote()"></span>
+					<span id="upvote" class="glyphicon glyphicon-arrow-up" style="font-size: 150px; padding-right: 9px; cursor:pointer;" onClick="upvote()"></span>
+					<span id="already_upvoted" class="glyphicon glyphicon-arrow-up" style="color:green; display:none; font-size: 150px; padding-right: 9px; cursor:pointer;" onClick="upvote()"></span>
 					<div>
-						<span style="font-size: 100px;">5</span>	
+						<span id="vote_tally" style="font-size: 100px;">{{ vote_tally }}</span>	
 					</div>
 					<span id="downvote" class="glyphicon glyphicon-arrow-down" style="font-size: 150px; padding-left: 14px; cursor:pointer;" onClick="downvote()"></span>
+					<span id="already_downvoted" class="glyphicon glyphicon-arrow-down" style="color:red; display:none; font-size: 150px; padding-left: 14px; cursor:pointer;" onClick="downvote()"></span>
 
 				</div>
 				<div class="col-md-6 hidden-border">
@@ -173,6 +174,14 @@ MRP.insert({
       }
     }
 
+    var vote_tally_stream = new EventSource('/vote_tally_stream');
+    var vote_tally = document.getElementById('vote_tally');
+    vote_tally_stream.onmessage = function(e) {
+      if ( !(e.data == "1") ) {
+        vote_tally.innerHTML =  e.data;
+      }
+    }
+
 	$('#volume').slider({
 		formater: function(value) {
 			return 'Current value: ' + value;
@@ -181,11 +190,17 @@ MRP.insert({
   }
 
   function upvote() {
-    
+    $.get("/upvote", null);
+    $("#upvote").hide();
+    $("#downvote").hide();
+    $("#already_upvoted").show();
   }
 
   function downvote() {
-    
+    $.get("/downvote", null);
+    $("#upvote").hide();
+    $("#downvote").hide();
+    $("#already_downvoted").show();
   }
 
 

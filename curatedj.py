@@ -21,6 +21,13 @@ def position_stream():
         print message
         yield 'data: %s\n\n' % message['data']
 
+def vote_tally_stream():
+    pubsub = red.pubsub()
+    pubsub.subscribe('vote_tally')
+    for message in pubsub.listen():
+        print message
+        yield 'data: %s\n\n' % message['data']
+
 def connect():
     cl = MPDClient()
     cl.connect("localhost", 6600)
@@ -45,6 +52,10 @@ def serve_song_title_stream():
 def serve_position_stream():
     return flask.Response(position_stream(), mimetype="text/event-stream")
 
+@curatedj.route('/vote_tally_stream')
+def serve_vote_tally_stream():
+    return flask.Response(vote_tally_stream(), mimetype="text/event-stream")
+
 @curatedj.route('/playlist')
 def playlist():
     cl = connect()
@@ -65,23 +76,31 @@ def index():
 
         con = connect()
         if 'song' in con.status():
-
             index = int(con.status()['song'])
             song = con.playlistinfo()[index]
             picked = red.get(song['file'])
+            vote_tally = red.get('votes')
         else:
             song = None
             picked = None
-        return render_template('index.html', song=song, picked=picked, username=username)
+            vote_tally = 0
+        return render_template('index.html', song=song, picked=picked, username=username, vote_tally=vote_tally)
 
 @curatedj.route('/upvote')
 def upvote():
-    
-    pass
+    votes = int(red.get('votes'))
+    votes = votes + 1
+    red.set('votes', votes)
+    red.publish('vote_tally', votes)
+    return ''
 
 @curatedj.route('/downvote')
 def downvote():
-    pass
+    votes = int(red.get('votes'))
+    votes = votes - 1
+    red.set('votes', votes)
+    red.publish('vote_tally', votes)
+    return ''
 
 @curatedj.route('/add/<path:filepath>', methods=['POST'])
 def add(filepath):
@@ -92,6 +111,8 @@ def add(filepath):
     # playlist somewhere else beside inside python-mpd2 library??
     # write wrapper for playlist functions??
     red.set(filepath, username)
+    red.set('votes',0)
+    red.publish('vote_tally', red.get('votes'))
     cl.play()
     return request.form['username']
 
