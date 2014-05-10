@@ -1,9 +1,26 @@
 <!DOCTYPE HTML>
+
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
 <title>CurateDJ</title>
 
-<!-- TODO: this doesn't work.  -->
-<audio controls src="http://192.168.102.136:8000/mpd.m3u;"></audio>
+<!-- BEGINS: AUTO-GENERATED MUSES RADIO PLAYER CODE -->
+<script type="text/javascript" src="http://hosted.musesradioplayer.com/mrp.js"></script>
+<script type="text/javascript">
+MRP.insert({
+'url':'http://107.22.37.178:8000/mpd',
+'codec':'mp3',
+'volume':100,
+'autoplay':true,
+'buffering':5,
+'title':'CurateDJ',
+'bgcolor':'#FFFFFF',
+'skin':'mcclean',
+'width':180,
+'height':60
+});
+</script>
+<!-- ENDS: AUTO-GENERATED MUSES RADIO PLAYER CODE -->
 
 <p>
 {% if song %}

@@ -23,4 +23,5 @@ do
         redis-cli publish now_playing "$SONG"
         PREV_SONG=$SONG
     fi
+    sleep 1
 done
