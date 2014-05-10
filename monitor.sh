@@ -9,7 +9,7 @@ function position_message {
     TIME=$(mpc status|tail -n 2 | head -n 1 | cut -d ' ' -f 5)
     PCT=$(mpc status|tail -n 2 | head -n 1 | cut -d ' ' -f 6)
     
-    redis-cli publish position "{'time':'$TIME', 'percentage':'$PCT'}"
+    redis-cli publish position "{time:'$TIME', percentage:'$PCT'}"
 }
 
 if [ "$#" -ne "1" ]
@@ -30,6 +30,7 @@ do
         echo "New song: $SONG"
         redis-cli publish now_playing "$SONG"
         PREV_SONG=$SONG
+	redis-cli set votes 0
 	position_message
     else
 	position_message
