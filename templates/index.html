@@ -71,11 +71,12 @@
 					<div>
 						<h2>Vote!</h2>
 					</div>
-					<span class="glyphicon glyphicon-arrow-up" style="font-size: 150px; padding-right: 9px;"></span>
+					<span id="upvote" class="glyphicon glyphicon-arrow-up" style="color:green; font-size: 150px; padding-right: 9px; cursor:pointer;" onClick="upvote()"></span>
+					<span id="already_upvoted" class="glyphicon glyphicon-arrow-up" style="font-size: 150px; padding-right: 9px; cursor:pointer;" onClick="upvote()"></span>
 					<div>
 						<span style="font-size: 100px;">5</span>	
 					</div>
-					<span class="glyphicon glyphicon-arrow-down" style="font-size: 150px; padding-left: 14px;"></span>
+					<span id="downvote" class="glyphicon glyphicon-arrow-down" style="font-size: 150px; padding-left: 14px; cursor:pointer;" onClick="downvote()"></span>
 
 				</div>
 				<div class="col-md-6 hidden-border">
@@ -112,14 +113,6 @@ MRP.insert({
 </div>
 
 <script type="text/javascript">
-
-  function next() {
-    $.get("{{ url_for('next') }}", null);
-  }
-
-  function prev() {
-    $.get("{{ url_for('prev') }}", null);
-  }
 
   function reload_playlist() {
     var playlist_div = document.getElementById('playlist');
@@ -185,6 +178,14 @@ MRP.insert({
 			return 'Current value: ' + value;
 		}
 	});
+  }
+
+  function upvote() {
+    
+  }
+
+  function downvote() {
+    
   }
 
 
