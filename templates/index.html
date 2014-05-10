@@ -89,9 +89,6 @@
         				<h4 class="modal-title" id="myModalLabel">Modal title</h4>
       					</div>
       				<div class="modal-body">
-					<script>
-						load_artist_list();
-					</script>
 	  				<div id="browser">
 					</div>
       					</div>
@@ -133,6 +130,7 @@ MRP.insert({
 
 <script type="text/javascript">
 var dirty_hack_flag = true;
+var voted = false;
 
   function reload_playlist() {
     var playlist_div = document.getElementById('playlist');
@@ -189,6 +187,7 @@ var dirty_hack_flag = true;
       if ( !(e.data == "1") ) {
         song_title.innerHTML =  e.data + ", Picked by: {{ picked }}";
         reload_playlist();
+        reset_vote_buttons();
       }
     };
 
@@ -234,17 +233,32 @@ var lastVolumeLevel = 0;
   }
 
   function upvote() {
-    $.get("/upvote", null);
-    $("#upvote").hide();
-    $("#downvote").hide();
-    $("#already_upvoted").show();
+    if (!voted) {
+      $.get("/upvote", null);
+      $("#upvote").hide();
+      $("#downvote").hide();
+      $("#already_upvoted").show();
+      voted = true;
+    }
   }
 
   function downvote() {
-    $.get("/downvote", null);
-    $("#upvote").hide();
-    $("#downvote").hide();
-    $("#already_downvoted").show();
+    if (!voted) {
+      $.get("/downvote", null);
+      $("#upvote").hide();
+      $("#downvote").hide();
+      $("#already_downvoted").show();
+      voted = true;
+    }  
+  }
+
+  function reset_vote_buttons() {
+    $("#already_upvoted").hide();
+    $("#already_downvoted").hide();
+    $("#downvote").show();
+    $("#upvote").show();
+    document.getElementById('vote_tally').innerHTML = 0;
+    voted = false;
   }
 
   $(document).ready(monitor_now_playing())
