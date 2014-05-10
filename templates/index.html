@@ -131,9 +131,7 @@ MRP.insert({
     var u = "{{ username }}";
     var browser_div = document.getElementById('browser');
     uri = encodeURI("/add/" + path)
-    $.post(uri,{username:u},function(data) {
-      alert(data)
-    });
+    $.post(uri,{username:u},null);
     $.get(uri,null);
     browser_div.innerHTML = "";
     reload_playlist();    
@@ -145,7 +143,7 @@ MRP.insert({
   	var song_title = document.getElementById('song_title');
   	song_title_stream.onmessage = function(e) {
   		if ( !(e.data == "1") ) {
-  			song_title.innerHTML =  e.data
+  			song_title.innerHTML =  e.data + ", Picked by: {{ picked }}";
             reload_playlist();
   		}
   	};

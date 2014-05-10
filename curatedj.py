@@ -47,7 +47,7 @@ def playlist():
 
 @curatedj.route('/', methods=['GET','POST'])
 def index():
-    import pdb; pdb.set_trace()
+
     if request.method == 'GET':
         return render_template('login.html')
     else:
@@ -55,6 +55,7 @@ def index():
 
         con = connect()
         if 'song' in con.status():
+
             index = int(con.status()['song'])
             song = con.playlistinfo()[index]
             picked = red.get(song['file'])
@@ -83,7 +84,7 @@ def add(filepath):
     # TODO: store "who added me" info with playlist--need to store
     # playlist somewhere else beside inside python-mpd2 library??
     # write wrapper for playlist functions??
-    red.put(filepath, username)
+    red.set(filepath, username)
     cl.play()
     return request.form['username']
 
