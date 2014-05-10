@@ -37,6 +37,7 @@ do
         echo "New song: $SONG"
         redis-cli publish now_playing "$SONG"
         PREV_SONG=$SONG
+	echo "RESETTING VOTES"
 	redis-cli set vote_tally 0
 	position_message
     else
