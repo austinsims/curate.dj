@@ -6,10 +6,17 @@
 # Usage: monitor.sh /path/to/playlist.log
 
 function position_message {
-    TIME=$(mpc status|tail -n 2 | head -n 1 | cut -d ' ' -f 5)
-    PCT=$(mpc status|tail -n 2 | head -n 1 | cut -d ' ' -f 6)
+
+    # Only do something if a song is playing.
+    SONG=$(mpc current)
+    if [ "$SONG" != ""  ]
+    then
+	TIME=$(mpc status|tail -n 2 | head -n 1 | cut -d ' ' -f 5)
+	PCT=$(mpc status|tail -n 2 | head -n 1 | cut -d ' ' -f 6)
+	echo $TIME
+	redis-cli publish position "{\"time\":\"$TIME\", \"percentage\":\"$PCT\"}"
+    fi
     
-    redis-cli publish position "{time:'$TIME', percentage:'$PCT'}"
 }
 
 if [ "$#" -ne "1" ]

@@ -58,7 +58,6 @@ def playlist():
 
 @curatedj.route('/', methods=['GET','POST'])
 def index():
-
     if request.method == 'GET':
         return render_template('login.html')
     else:
@@ -75,7 +74,14 @@ def index():
             picked = None
         return render_template('index.html', song=song, picked=picked, username=username)
 
+@curatedj.route('/upvote')
+def upvote():
+    
+    pass
 
+@curatedj.route('/downvote')
+def downvote():
+    pass
 
 @curatedj.route('/add/<path:filepath>', methods=['POST'])
 def add(filepath):
