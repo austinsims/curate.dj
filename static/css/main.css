@@ -6,3 +6,7 @@
 .hidden-border {
 	border: 1px solid #eee;
 }
+
+.glyphicon {
+	vertical-align: middle;
+}
