@@ -1,16 +1,5 @@
-<table border="1">
-<th>
-  <tr>
-    <th>Artist</th>
-    <th>Title</th>
-    <th>Album</th>
-  </tr>
-</th>
-{% for song in playlist %}
-  <tr>
-    <td>{{ song.artist }}</td>
-    <td>{{ song.title }}</td>
-    <td>{{ song.album }}</td>
-  </tr>
-{% endfor %}
-</table>
+<ul class="list-group">
+  {% for song in playlist %}
+    <li class="list-group-item">{{ song.artist }} - {{ song.title }} - {{ song.album }}</li>
+  {% endfor %}
+</ul>

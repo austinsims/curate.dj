@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+<title>CurateDJ</title>
+
+<!-- BEGINS: AUTO-GENERATED MUSES RADIO PLAYER CODE -->
+<script type="text/javascript" src="http://hosted.musesradioplayer.com/mrp.js"></script>
+<script type="text/javascript">
+MRP.insert({
+'url':'http://107.22.37.178:8000/mpd',
+'codec':'mp3',
+'volume':100,
+'autoplay':true,
+'buffering':5,
+'title':'CurateDJ',
+'bgcolor':'#FFFFFF',
+'skin':'mcclean',
+'width':180,
+'height':60
+});
+</script>
+<!-- ENDS: AUTO-GENERATED MUSES RADIO PLAYER CODE -->
+
+<p>
+{% if song %}
+  Now Playing: <span id='song_title'>{{ song.artist }} - {{ song.title }}</span>
+{% else %}
+  There is nothing playing.
+{% endif %}
+</p>
+
+<div id="playlist"></div>
+<a href="#" onClick="prev()">Previous</a>
+<a href="#" onClick="next()">Next</a>
+<a href="{{ url_for('browse') }}">Browse</a>
+
+<script type="text/javascript">
+
+  function next() {
+    $.get("{{ url_for('next') }}", null);
+  }
+
+  function prev() {
+    $.get("{{ url_for('prev') }}", null);
+  }
+
+  function reload_playlist() {
+    var playlist_div = document.getElementById('playlist');
+    $.get("/playlist", function(data, status) {
+  		playlist.innerHTML = data;
+    });
+  }
+
+  function monitor_now_playing() {
+    reload_playlist();
+    var song_title_stream = new EventSource('/song_title_stream');
+  	var song_title = document.getElementById('song_title');
+  	song_title_stream.onmessage = function(e) {
+  		if ( !(e.data == "1") ) {
+  			song_title.innerHTML =  e.data
+            reload_playlist();
+  		}
+  	};
+  }
+
+  $(document).ready(monitor_now_playing())
+</script>

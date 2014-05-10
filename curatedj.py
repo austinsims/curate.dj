@@ -42,13 +42,14 @@ def playlist():
 
 @curatedj.route('/')
 def index():
+    picked = 'FIXME'
     con = connect()
-    try:
+    if 'song' in con.status():
         index = int(con.status()['song'])
-    except KeyError:
+        song = con.playlistinfo()[index]
+    else:
         song = None
-    song = con.playlistinfo()[index]
-    return render_template('index.html', song=song)
+    return render_template('index.html', song=song, picked=picked)
 
 @curatedj.route('/next')
 def next():
