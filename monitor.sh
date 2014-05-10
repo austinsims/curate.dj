@@ -9,7 +9,7 @@ function position_message {
 
     # Only do something if a song is playing.
     SONG=$(mpc current)
-    if [ "$SONG" != ""  ]
+    if [ "$SONG" != "" ]
     then
 	TIME=$(mpc status|tail -n 2 | head -n 1 | cut -d ' ' -f 5)
 	PCT=$(mpc status|tail -n 2 | head -n 1 | cut -d ' ' -f 6)
@@ -37,7 +37,7 @@ do
         echo "New song: $SONG"
         redis-cli publish now_playing "$SONG"
         PREV_SONG=$SONG
-	redis-cli set votes 0
+	redis-cli set vote_tally 0
 	position_message
     else
 	position_message
