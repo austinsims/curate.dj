@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>Albums by {{ artist }}</h2>
+  {% for album in albums %}
+    <a href="{{ url_for('browse', artist=artist, album=album) }}">{{ album }}</a>
+  <br/>
+  {% endfor %}
+
+  {% if other|length > 0 %}
+  <h3>Songs by {{ artist }} with unknown album</h3>
+  {% for song in other %}
+    <a href="{{ url_for('add', filepath=song.file) }}">{{ song.title }}</a><br/>
+  {% endfor %}
+  {% endif %}
+
+{% endblock %}

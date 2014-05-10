@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% for thing in list %}
+  {% if 'directory' in thing %}
+    <a href="{% url 'browse_path' thing.directory %}">{{ thing.directory }}</a>
+  {% else %}
+    <a href="{% url 'enqueue' thing.file %}">{{ thing.artist }} - {{ thing.title }}</a>
+  {% endif %}
+<br/>
+{% endfor %}
+{% endblock %}

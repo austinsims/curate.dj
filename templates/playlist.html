@@ -1,0 +1,16 @@
+<table border="1">
+<th>
+  <tr>
+    <th>Artist</th>
+    <th>Title</th>
+    <th>Album</th>
+  </tr>
+</th>
+{% for song in playlist %}
+  <tr>
+    <td>{{ song.artist }}</td>
+    <td>{{ song.title }}</td>
+    <td>{{ song.album }}</td>
+  </tr>
+{% endfor %}
+</table>
