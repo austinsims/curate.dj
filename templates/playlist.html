@@ -1,5 +1,7 @@
 <ul class="list-group">
   {% for song in playlist %}
+    {% if 'playing' in song %} <b> {% endif %}
     <li class="list-group-item">{{ song.artist }} - {{ song.title }} - {{ song.album }}</li>
+    {% if 'playing' in song %} </b> {% endif %}
   {% endfor %}
 </ul>

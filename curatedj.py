@@ -38,6 +38,11 @@ def serve_song_title_stream():
 def playlist():
     cl = connect()
     playlist = cl.playlistinfo()
+    state = cl.status()['state']
+    if state == 'play':
+        playing_index = int(cl.status()['song'])
+        playlist[playing_index]['playing'] = True
+        
     return render_template('playlist.html', playlist=playlist)
 
 @curatedj.route('/')
