@@ -14,6 +14,13 @@ def song_title_stream():
         print message
         yield 'data: %s\n\n' % message['data']
 
+def position_stream():
+    pubsub = red.pubsub()
+    pubsub.subscribe('position')
+    for message in pubsub.listen():
+        print message
+        yield 'data: %s\n\n' % message['data']
+
 def connect():
     cl = MPDClient()
     cl.connect("localhost", 6600)
@@ -33,6 +40,10 @@ def unknown_album(artist):
 @curatedj.route('/song_title_stream')
 def serve_song_title_stream():
     return flask.Response(song_title_stream(), mimetype="text/event-stream")
+
+@curatedj.route('/position_stream')
+def serve_position_stream():
+    return flask.Response(position_stream(), mimetype="text/event-stream")
 
 @curatedj.route('/playlist')
 def playlist():

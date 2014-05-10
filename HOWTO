@@ -32,3 +32,4 @@ import redis
 red = redis.StrictRedis()
 red.set('key', 'value')
 red.get('key') # will return 'value'
+
