@@ -21,7 +21,6 @@
 		<![endif]-->
 	</head>
 	<body>
-
 	  
 	  <p>Welcome, {{ username }}. <a href="{{ url_for('goodbye', username=username) }}">logout</a></p>
 	  <a href="#" onClick="load_artist_list()">Browse</a>
@@ -29,10 +28,11 @@
 
 	  </div>
 
+
 		<div class="container">
 			<div class="row title">
 				<div class="col-md-6">
-					<h1>CurateDJ</h1>
+					<h1>Welcome to CurateDJ, {{ username }}</h1>
 				</div>
 				<div class="col-md-3">
 					<h4>
@@ -79,8 +79,7 @@
 				</div>
 				<div class="col-md-6 hidden-border">
 					<div>
-						<h2>Queue</h2>
-						<button  class="btn btn-primary" data-toggle="modal" data-target="#myModal">Browse</button>
+						<h2>Queue  <button  class="btn btn-primary" style="float: right;" data-toggle="modal" data-target="#myModal" onClick="load_artist_list()">Browse</button></h2>
 					</div>
 
 				<!-- Modal -->
@@ -92,11 +91,14 @@
         				<h4 class="modal-title" id="myModalLabel">Modal title</h4>
       					</div>
       				<div class="modal-body">
-        					...
+					<script>
+						load_artist_list();
+					</script>
+	  				<div id="browser">
+					</div>
       					</div>
       				<div class="modal-footer">
         				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        				<button type="button" class="btn btn-primary">Save changes</button>
       					</div>
     				</div>
   				</div>
@@ -169,7 +171,7 @@ MRP.insert({
     uri = encodeURI("/add/" + path)
     $.post(uri,{username:u},null);
     $.get(uri,null);
-    browser_div.innerHTML = "";
+    browser_div.innerHTML = load_artist_list();
     reload_playlist();    
   }
 

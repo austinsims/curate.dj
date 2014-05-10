@@ -2,9 +2,14 @@ from flask import Flask, url_for, render_template, redirect, request
 import redis
 import flask
 from mpd import MPDClient
+import urllib
 
 curatedj = Flask(__name__)
 red = redis.StrictRedis()
+
+# Scrape number of listeners from the icecast2 status page.
+def population():
+    pass
 
 def song_title_stream():
     pubsub = red.pubsub()
@@ -113,7 +118,6 @@ def downvote():
     red.set('vote_tally', votes)
 
     #Skip if the song sucks.
-    import pdb; pdb.set_trace()
     if votes <= population / -2:
         cl = connect()
         cl.next()
