@@ -75,17 +75,7 @@ def index():
             picked = None
         return render_template('index.html', song=song, picked=picked, username=username)
 
-@curatedj.route('/next')
-def next():
-    cl = connect()
-    cl.next()
-    return redirect(url_for('playlist'))
 
-@curatedj.route('/prev')
-def prev():
-    cl = connect()
-    cl.previous()
-    return redirect(url_for('playlist'))
 
 @curatedj.route('/add/<path:filepath>', methods=['POST'])
 def add(filepath):
