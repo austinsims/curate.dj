@@ -140,14 +140,15 @@ def add(filepath):
     username = request.form['username']
     cl = connect()
     cl.add(filepath)
-    # TODO: store "who added me" info with playlist--need to store
-    # playlist somewhere else beside inside python-mpd2 library??
-    # write wrapper for playlist functions??
     red.set(filepath, username)
+    song = cl.listallinfo(filepath)[0]
+    artist = song['artist']
+    title = song['title']
     red.set('vote_tally',0)
     red.publish('vote_tally', red.get('vote_tally'))
     cl.play()
-    return request.form['username']
+    message = "%s - %s, Picked by: %s" % (artist, title, username)
+    return message
 
 @curatedj.route('/browse')
 @curatedj.route('/browse/<artist>')

@@ -51,11 +51,13 @@
 			<div class="row hidden-border">
 				<div class="col-md-12">
 					<h2 style="text-align: left;" >
+					  Currently Playing: <span id='song_title'>
 						{% if song %}
-						Currently Playing: <span id='song_title'>{{ song.artist }} - {{ song.title }}, Picked by: {{ picked }}</span>
+						{{ song.artist }} - {{ song.title }}, Picked by: {{ picked }}
 						{% else %}
 						There is nothing playing!
 						{% endif %}
+					  </span>
 					</h2>
 				</div>	
 			</div>
@@ -130,6 +132,7 @@ MRP.insert({
 </div>
 
 <script type="text/javascript">
+var dirty_hack_flag = true;
 
   function reload_playlist() {
     var playlist_div = document.getElementById('playlist');
@@ -164,10 +167,17 @@ MRP.insert({
   function enqueue(path) {
     var u = "{{ username }}";
     var browser_div = document.getElementById('browser');
+    var song_title = document.getElementById('song_title');
     uri = encodeURI("/add/" + path)
-    $.post(uri,{username:u},null);
+    $.post(uri,{username:u},function(data,status) {
+      if (dirty_hack_flag = true) {
+        song_title.innerHTML = data;
+        dirty_hack_flag = false;
+      }
+    });
     $.get(uri,null);
     browser_div.innerHTML = load_artist_list();
+    
     reload_playlist();    
   }
 
