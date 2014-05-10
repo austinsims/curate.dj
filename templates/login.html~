@@ -1,0 +1,3 @@
+<!doctype html>
+What's your name?<br/>
+<input type="text" name="username">

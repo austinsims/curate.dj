@@ -1,4 +1,4 @@
-from flask import Flask, url_for, render_template, redirect
+from flask import Flask, url_for, render_template, redirect, request
 import redis
 import flask
 from mpd import MPDClient
@@ -45,16 +45,20 @@ def playlist():
         
     return render_template('playlist.html', playlist=playlist)
 
-@curatedj.route('/')
+@curatedj.route('/', methods=['GET','POST'])
 def index():
-    picked = 'FIXME'
-    con = connect()
-    if 'song' in con.status():
-        index = int(con.status()['song'])
-        song = con.playlistinfo()[index]
+    if request.method == 'GET':
+        return render_template('login.html')
     else:
-        song = None
-    return render_template('index.html', song=song, picked=picked)
+        username = request.form['username']
+        picked = 'FIXME'
+        con = connect()
+        if 'song' in con.status():
+            index = int(con.status()['song'])
+            song = con.playlistinfo()[index]
+        else:
+            song = None
+        return render_template('index.html', song=song, picked=picked, username=username)
 
 @curatedj.route('/next')
 def next():
