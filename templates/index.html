@@ -126,7 +126,7 @@ MRP.insert({
 </div>
 
 <script type="text/javascript">
-var dirty_hack_flag = true;
+
 var voted = false;
 
   function reload_playlist() {
@@ -164,12 +164,8 @@ var voted = false;
     var browser_div = document.getElementById('browser');
     var song_title = document.getElementById('song_title');
     uri = encodeURI("/add/" + path)
-    $.post(uri,{username:u},function(data,status) {
-      if (dirty_hack_flag = true) {
-        song_title.innerHTML = data;
-        dirty_hack_flag = false;
-      }
-    });
+    $.post(uri,{username:u},null);
+
     $.get(uri,null);
     browser_div.innerHTML = load_artist_list();
     
