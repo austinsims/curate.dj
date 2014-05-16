@@ -17,4 +17,8 @@ ADD ./icecast.xml /etc/icecast2/icecast.xml
 EXPOSE	8000
 EXPOSE	80
 
-#RUN 	aws s3 cp s3://curatedj /var/lib/mpd/music
+RUN 	aws s3 cp --recursive s3://curatedj /var/lib/mpd/music
+RUN	service mpd stop
+RUN	service mpd start
+
+CMD 	icecast2 -c /etc/icecast2/icecast.xml & ./src/monitor.sh /var/log/icecast2/playlist.log & python ./src/curatedj.py
