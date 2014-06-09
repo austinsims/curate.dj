@@ -1,9 +1,26 @@
+Configuration
+--------------------------
+For first time setup:
+1.  Make sure the python dependencies are installed
+2.  Install redis
+        wget http://download.redis.io/releases/redis-2.8.9.tar.gz
+        tar xvf redis-2.8.9.tar.gz
+        cd redis-2.8.9
+        make; make test
+        sudo make install
+        cd utils; sudo ./install_server.sh
+3.  Install mpd
+4.  Install icecast2
+5.  Add this to /etc/fstab to bind any music directory to the mpd music dir
+        /path/to/music/dir /var/lib/mpd/music none bind 
+    then run mount -a
+
 Server
 --------------------------
 
 To start the server, navigate to where curatedj.py is and:
-
-
+Make sure that mpd and icecast2 are running
+./monitor.sh /path/to/playlist.log
 gunicorn -b 0.0.0.0:<YOUR_PORT> --debug --worker-class=gevent -t 99999 curatedj:curatedj
 
 
